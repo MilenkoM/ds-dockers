@@ -1,0 +1,91 @@
+FROM nvidia/cuda:8.0-cudnn5-runtime
+
+MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
+
+RUN apt-get update && apt-get install -y \
+        bc \
+        bash-completion \
+        build-essential \
+        cmake \
+        curl \
+        g++ \
+        gfortran \
+        git \
+        libffi-dev \
+        libfreetype6-dev \
+        libhdf5-dev \
+        libjpeg-dev \
+        liblcms2-dev \
+        libopenblas-dev \
+        liblapack-dev \
+        libopenjpeg2 \
+        libpng12-dev \
+        libssl-dev \
+        libtiff5-dev \
+        libwebp-dev \
+        libzmq3-dev \
+        pkg-config \
+        python-dev \
+        python3-dev \
+        software-properties-common \
+        unzip \
+        vim \
+        wget \
+        htop \
+        tmux \
+        vim \
+        python-tk \
+        python3-tk \
+        zlib1g-dev \
+        && \
+	apt-get clean && \
+	apt-get autoremove && \
+	rm -rf /var/lib/apt/lists/* && \
+# Link BLAS library to use OpenBLAS using the alternatives mechanism (https://www.scipy.org/scipylib/building/linux.html#debian-ubuntu)
+	update-alternatives --set libblas.so.3 /usr/lib/openblas-base/libblas.so.3
+
+# Install pip
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+	python3 get-pip.py && \
+	python get-pip.py && \
+	rm get-pip.py
+
+# Add SNI support to Python
+RUN pip --no-cache-dir install \
+        pyopenssl \
+        ndg-httpsclient \
+        pyasn1 \
+        jupyter
+
+RUN pip3 --no-cache-dir install \
+        pyopenssl \
+        ndg-httpsclient \
+        pyasn1 \
+        jupyter
+
+RUN pip3 install --upgrade git+git://github.com/Theano/Theano.git six && \
+    pip install --upgrade git+git://github.com/Theano/Theano.git six
+
+# Set up .theanorc for CUDA
+ENV CUDA_ROOT /usr/local/cuda/bin
+RUN echo "[global]\ndevice=gpu\nfloatX=float32\nmode=FAST_RUN\noptimizer_including=cudnn\
+        \n[lib]\ncnmem=0.95 \
+        \n[nvcc]\nfastmath=True \
+        \n[blas]\nldflag = -L/usr/lib/openblas-base -lopenblas \
+        \n[DebugMode]\ncheck_finite=1" \
+    > /root/.theanorc
+
+RUN pip3 --no-cache-dir install tensorflow-gpu && pip --no-cache-dir install tensorflow-gpu
+
+# PORTS
+EXPOSE 6006 8887 8888 8889
+
+# JUPYTER CONFIG
+COPY jupyter_notebook_config.py /root/.jupyter/
+COPY run_jupyter.sh /root/
+RUN chmod +x /root/run_jupyter.sh
+ARG PASSWORD=default
+ENV PASSWORD ${PASSWORD}
+
+WORKDIR "/root"
+CMD ["/root/run_jupyter.sh"]

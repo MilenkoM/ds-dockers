@@ -1,0 +1,3 @@
+FROM ferres/base:сpu
+
+MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
