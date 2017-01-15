@@ -66,7 +66,7 @@ RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git
     pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six
 
 # ENVIRONMENT
-# Set up .theanorc for CPU
+## Set up .theanorc for CPU
 RUN echo "[global]\ndevice=cpu\nfloatX=float32\nmode=FAST_RUN \
         \n[lib]\ncnmem=0.95 \
         \n[nvcc]\nfastmath=True \
@@ -76,15 +76,15 @@ RUN echo "[global]\ndevice=cpu\nfloatX=float32\nmode=FAST_RUN \
 
 RUN pip3 --no-cache-dir install tensorflow && pip --no-cache-dir install tensorflow
 
-# PORTS
-EXPOSE 6006 8887 8888 8889
-
 # JUPYTER CONFIG
 COPY jupyter_notebook_config.py /root/.jupyter/
 COPY run_jupyter.sh /root/
 RUN chmod +x /root/run_jupyter.sh
 ARG PASSWORD=default
 ENV PASSWORD ${PASSWORD}
+RUN python -m ipykernel install && python3 -m ipykernel install
 
 WORKDIR "/root"
+# PORTS
+EXPOSE 6006 8887 8888 8889
 CMD ["/root/run_jupyter.sh"]
