@@ -62,8 +62,8 @@ RUN pip --no-cache-dir install \
         pyasn1 \
         jupyter
 
-RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six
-RUN pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six
+RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six && \
+    pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six
 
 # ENVIRONMENT
 # Set up .theanorc for CPU

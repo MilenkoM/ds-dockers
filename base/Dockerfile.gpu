@@ -55,9 +55,8 @@ RUN pip --no-cache-dir install \
         pyopenssl \
         ndg-httpsclient \
         pyasn1 \
-        jupyter
-
-RUN pip3 --no-cache-dir install \
+        jupyter && \
+    pip3 --no-cache-dir install \
         pyopenssl \
         ndg-httpsclient \
         pyasn1 \
