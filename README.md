@@ -43,8 +43,8 @@ Pushes dockers to remote repository
 # -r repo : used as following `docker push $REPO/base:gpu && docker push $REPO/base:cpu`, ferres repo by default
 ```
 
-## nvidia-tools.sh
+## nvidia-docker-install.sh
 Configures aws for gpu docker, needs to be excecuted on aws instance. Then you can use `nvidia-docker`
 ```
-./nvidia-tools.sh
+./nvidia-docker-install.sh
 ```
