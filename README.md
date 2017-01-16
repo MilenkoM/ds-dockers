@@ -1,6 +1,19 @@
 # ds-dockers
 Useful dockers for DataScience
 
+# Usage
+## CPU version
+```
+docker run -d -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder ferres/sci:cpu
+```
+
+## GPU version
+```
+# if nvidia-docker is not installed
+# ./nvidia-docker-install.sh
+nvidia-docker run -d -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder ferres/sci:gpu
+```
+
 # Some scripts
 
 ## build.sh
