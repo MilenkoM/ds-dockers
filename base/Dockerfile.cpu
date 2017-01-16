@@ -3,8 +3,6 @@ FROM ubuntu:14.04
 MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
 
 RUN apt-get update && apt-get install -y \
-        bc \
-        bash-completion \
         build-essential \
         cmake \
         curl \
@@ -29,7 +27,6 @@ RUN apt-get update && apt-get install -y \
         python3-dev \
         software-properties-common \
         unzip \
-        vim \
         wget \
         htop \
         tmux \
