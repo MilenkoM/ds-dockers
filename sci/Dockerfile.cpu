@@ -1,4 +1,4 @@
-FROM ferres/base:сpu
+FROM ferres/base:cpu
 
 MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
 
