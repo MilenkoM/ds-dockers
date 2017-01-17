@@ -2,6 +2,26 @@ FROM ferres/base:cpu
 
 MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
 
+RUN git clone --recursive https://github.com/dmlc/xgboost /src/xgboost/ && \
+    make -j4 -C /src/xgboost/ && \
+    pip install -e /src/xgboost/python-package && \
+    pip3 install -e /src/xgboost/python-package
+
+RUN pip --no-cache-dir install \
+    https://github.com/rushter/heamy/archive/master.zip \
+    https://github.com/fchollet/keras/archive/master.zip \
+    https://github.com/hyperopt/hyperopt/archive/master.zip \
+    https://github.com/Lasagne/Lasagne/archive/master.zip \
+    https://github.com/pymc-devs/pymc3/archive/master.zip \
+    https://github.com/ferrine/gelato/archive/master.zip && \
+    pip3 --no-cache-dir install \
+    https://github.com/rushter/heamy/archive/master.zip \
+    https://github.com/fchollet/keras/archive/master.zip \
+    https://github.com/hyperopt/hyperopt/archive/master.zip \
+    https://github.com/Lasagne/Lasagne/archive/master.zip \
+    https://github.com/pymc-devs/pymc3/archive/master.zip \
+    https://github.com/ferrine/gelato/archive/master.zip
+
 RUN pip install --no-cache-dir \
     numpy \
     scipy \
@@ -20,7 +40,8 @@ RUN pip install --no-cache-dir \
     pygments \
     sphinx \
     wheel \
-    zmq && \
+    zmq \
+    xlrd && \
     pip3 install --no-cache-dir \
     numpy \
     scipy \
@@ -39,23 +60,5 @@ RUN pip install --no-cache-dir \
     pygments \
     sphinx \
     wheel \
-    zmq && \
-    pip --no-cache-dir install \
-    https://github.com/rushter/heamy/archive/master.zip \
-    https://github.com/fchollet/keras/archive/master.zip \
-    https://github.com/hyperopt/hyperopt/archive/master.zip \
-    https://github.com/Lasagne/Lasagne/archive/master.zip \
-    https://github.com/pymc-devs/pymc3/archive/master.zip \
-    https://github.com/ferrine/gelato/archive/master.zip && \
-    pip3 --no-cache-dir install \
-    https://github.com/rushter/heamy/archive/master.zip \
-    https://github.com/fchollet/keras/archive/master.zip \
-    https://github.com/hyperopt/hyperopt/archive/master.zip \
-    https://github.com/Lasagne/Lasagne/archive/master.zip \
-    https://github.com/pymc-devs/pymc3/archive/master.zip \
-    https://github.com/ferrine/gelato/archive/master.zip
-
-RUN git clone --recursive https://github.com/dmlc/xgboost /src/xgboost/ && \
-    make -j4 -C /src/xgboost/ && \
-    pip install -e /src/xgboost/python-package && \
-    pip3 install -e /src/xgboost/python-package
+    zmq \
+    xlrd
