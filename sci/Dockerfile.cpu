@@ -62,3 +62,8 @@ RUN pip install --no-cache-dir \
     wheel \
     zmq \
     xlrd
+
+# build cache fonts
+ENV XDG_CACHE_HOME /root/.cache/
+ENV MPLBACKEND=Agg
+RUN python -c "import matplotlib.pyplot" && python3 -c "import matplotlib.pyplot"
