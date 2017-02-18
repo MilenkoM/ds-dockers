@@ -59,8 +59,8 @@ RUN pip --no-cache-dir install \
         pyasn1 \
         jupyter
 
-RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six && \
-    pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git six
+RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six && \
+    pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six
 
 # ENVIRONMENT
 ## Set up .theanorc for CPU
@@ -82,6 +82,12 @@ ENV PASSWORD ${PASSWORD}
 RUN python -m ipykernel install && python3 -m ipykernel install
 
 WORKDIR "/root"
+
+# build cache fonts
+ENV XDG_CACHE_HOME /root/.cache/
+ENV MPLBACKEND=Agg
+RUN python -c "import matplotlib.pyplot"
+
 # PORTS
 EXPOSE 6006 8887 8888 8889
 CMD ["/root/run_jupyter.sh"]
