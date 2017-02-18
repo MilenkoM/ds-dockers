@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 sudo apt-get update && \
-        sudo apt-get -y install docker.io && \
-        sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker && \
-        sudo gpasswd -a `whoami` docker && \
-        echo "need restart ssh session"
-
-
+    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && \
+    sudo apt-add-repository "deb https://apt.dockerproject.org/repo ubuntu-$(uname -s)  main" && \
+    sudo apt-get update && \
+    sudo apt-get install -y docker-engine && \
+    sudo usermod -aG docker $(whoami)
