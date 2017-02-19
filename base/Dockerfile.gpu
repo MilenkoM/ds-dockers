@@ -23,7 +23,6 @@ RUN apt-get update && apt-get install -y \
         libwebp-dev \
         libzmq3-dev \
         pkg-config \
-        python-dev \
         python3-dev \
         software-properties-common \
         unzip \
@@ -31,7 +30,6 @@ RUN apt-get update && apt-get install -y \
         htop \
         tmux \
         vim \
-        python-tk \
         python3-tk \
         zlib1g-dev \
         && \
@@ -44,23 +42,16 @@ RUN apt-get update && apt-get install -y \
 # Install pip
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 	python3 get-pip.py && \
-	python get-pip.py && \
 	rm get-pip.py
 
 # Add SNI support to Python
-RUN pip --no-cache-dir install \
-        pyopenssl \
-        ndg-httpsclient \
-        pyasn1 \
-        jupyter && \
-    pip3 --no-cache-dir install \
+RUN pip3 --no-cache-dir install \
         pyopenssl \
         ndg-httpsclient \
         pyasn1 \
         jupyter
 
-RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six && \
-    pip install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six
+RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six
 
 # ENVIRONMENT
 ## Set up .theanorc for CUDA
@@ -72,7 +63,7 @@ RUN echo "[global]\ndevice=gpu\nfloatX=float32\nmode=FAST_RUN\noptimizer_includi
         \n[DebugMode]\ncheck_finite=1" \
     > /root/.theanorc
 
-RUN pip3 --no-cache-dir install tensorflow-gpu && pip --no-cache-dir install tensorflow-gpu
+RUN pip3 --no-cache-dir install tensorflow-gpu
 
 # JUPYTER CONFIG
 COPY jupyter_notebook_config.py /root/.jupyter/
@@ -80,14 +71,14 @@ COPY run_jupyter.sh /root/
 RUN chmod +x /root/run_jupyter.sh
 ARG PASSWORD=default
 ENV PASSWORD ${PASSWORD}
-RUN python -m ipykernel install && python3 -m ipykernel install
+RUN python3 -m ipykernel install
 
 WORKDIR "/root"
 
 # build cache fonts
 ENV XDG_CACHE_HOME /root/.cache/
 ENV MPLBACKEND=Agg
-RUN python -c "import matplotlib.pyplot"
+RUN python3 -c "import matplotlib.pyplot"
 
 # PORTS
 EXPOSE 6006 8887 8888 8889

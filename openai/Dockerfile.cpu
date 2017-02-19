@@ -17,26 +17,12 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted 
 	apt-get autoremove && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip \
-                           scipy \
-                           numpy && \
-    pip install --upgrade sklearn \
-                           tqdm \
-                           gym[all] \
-                           matplotlib \
-                           seaborn && \
-    pip install --upgrade  https://github.com/Lasagne/Lasagne/archive/master.zip \
-                           https://github.com/yandexdataschool/AgentNet/archive/master.zip \
-                           keras
-
-
 RUN pip3 install --upgrade pip \
                            scipy \
                            numpy && \
     pip3 install --upgrade sklearn \
                            tqdm \
                            gym[all] \
-                           matplotlib \
                            seaborn && \
     pip3 install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip \
                            https://github.com/yandexdataschool/AgentNet/archive/master.zip \
