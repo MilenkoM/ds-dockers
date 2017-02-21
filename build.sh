@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-while getopts 'bs' flag; do
+while getopts 'bso' flag; do
   case "${flag}" in
     b) docker build -t ferres/base:gpu -f base/Dockerfile.gpu ./base && \
        docker build -t ferres/base:cpu -f base/Dockerfile.cpu ./base ;;
