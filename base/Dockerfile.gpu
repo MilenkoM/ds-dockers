@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y \
         vim \
         python3-tk \
         zlib1g-dev \
+        graphviz \
         && \
 	apt-get clean && \
 	apt-get autoremove && \
@@ -50,7 +51,7 @@ RUN pip3 --no-cache-dir install \
         pyasn1 \
         jupyter
 
-RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six
+RUN pip3 install --no-cache-dir --upgrade git+git://github.com/Theano/Theano.git matplotlib six pydot-ng
 
 # ENVIRONMENT
 ## Set up .theanorc for CUDA
