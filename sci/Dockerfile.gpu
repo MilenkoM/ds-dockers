@@ -1,4 +1,4 @@
-FROM ferres/base:gpu
+FROM ferres/ds-dockers:base.gpu
 
 MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
 

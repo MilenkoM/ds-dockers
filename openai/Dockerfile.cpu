@@ -1,4 +1,4 @@
-FROM ferres/base:cpu
+FROM ferres/ds-dockers:base.cpu
 
 MAINTAINER Maxim Kochurov <maxim.v.kochurov@gmail.com>
 
